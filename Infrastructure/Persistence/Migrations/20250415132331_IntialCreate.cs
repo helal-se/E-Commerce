@@ -16,9 +16,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,9 +29,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,13 +44,10 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    ProductBrandId = table.Column<int>(type: "int", nullable: true),
-                    ProductTypeId = table.Column<int>(type: "int", nullable: true)
+                    BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,16 +58,6 @@ namespace Persistence.Migrations
                         principalTable: "ProductBrands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductBrands_ProductBrandId",
-                        column: x => x.ProductBrandId,
-                        principalTable: "ProductBrands",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_ProductTypes_TypeId",
                         column: x => x.TypeId,
@@ -87,16 +70,6 @@ namespace Persistence.Migrations
                 name: "IX_Products_BrandId",
                 table: "Products",
                 column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductBrandId",
-                table: "Products",
-                column: "ProductBrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductTypeId",
-                table: "Products",
-                column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_TypeId",
