@@ -2,15 +2,15 @@
 
 namespace Domain.Contracts
 {
-    public interface IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
+    public interface IGenericRepository<TEntity, in TKey> where TEntity : BaseEntity<TKey>
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity?> GetByIdAsync(TKey id);
 
-        Task<TEntity> AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
-        Task<TEntity> UpdateAsync(TEntity entity);
+        void UpdateAsync(TEntity entity);
 
-        Task<bool> DeleteAsync(TKey id);
+        void DeleteAsync(TEntity entity);
     }
 }
