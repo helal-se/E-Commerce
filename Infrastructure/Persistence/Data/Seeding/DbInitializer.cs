@@ -14,7 +14,7 @@
 					{
 						var typeData = File.OpenRead(@"..\Infrastructure\Persistence\Data\Seeding\JsonFiles\types.json");
 						var types = await JsonSerializer.DeserializeAsync<List<ProductType>>(typeData);
-						if(types is not null && types.Any())
+						if(types is not null && types.Count != 0)
 						{
                             await _dbContext.ProductTypes.AddRangeAsync(types);
                         }
@@ -23,7 +23,7 @@
                     {
                         var brandData = File.OpenRead(@"..\Infrastructure\Persistence\Data\Seeding\JsonFiles\brands.json");
                         var brands = await JsonSerializer.DeserializeAsync<List<ProductBrand>>(brandData);
-                        if (brands is not null && brands.Any())
+                        if (brands is not null && brands.Count != 0)
                         {
                             await _dbContext.ProductBrands.AddRangeAsync(brands);
                         }
@@ -32,7 +32,7 @@
                     {
                         var productData = File.OpenRead(@"..\Infrastructure\Persistence\Data\Seeding\JsonFiles\products.json");
                         var products = await JsonSerializer.DeserializeAsync<List<Product>>(productData);
-                        if (products is not null && products.Any())
+                        if (products is not null && products.Count != 0)
                         {
                             await _dbContext.Products.AddRangeAsync(products);
                         }
