@@ -4,6 +4,7 @@ using Persistence.Data;
 using Persistence.Data.Seeding;
 using Persistence.Repositories;
 using Service;
+using Service.Abstraction;
 
 namespace E_Commerce.Api
 {
@@ -24,6 +25,7 @@ namespace E_Commerce.Api
 
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
             var app = builder.Build();
             await InitializeDatabase();
