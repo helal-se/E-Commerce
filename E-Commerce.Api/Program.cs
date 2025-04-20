@@ -2,6 +2,8 @@ using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Persistence.Data.Seeding;
+using Persistence.Repositories;
+using Service;
 
 namespace E_Commerce.Api
 {
@@ -21,7 +23,8 @@ namespace E_Commerce.Api
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
             var app = builder.Build();
             await InitializeDatabase();
             // Configure the HTTP request pipeline.

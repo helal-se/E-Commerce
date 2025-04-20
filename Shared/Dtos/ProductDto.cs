@@ -7,7 +7,7 @@
         public decimal Price;
         public string Description;
         public string PictureUrl;
-        public string ProductType;
-        public string ProductBrand;
+        public string TypeName;
+        public string BrandName;
     }
 }
