@@ -38,6 +38,8 @@ namespace E_Commerce.Api
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseAuthorization();
 
 
