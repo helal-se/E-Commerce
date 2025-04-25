@@ -2,7 +2,7 @@
 using Domain.Entities;
 using Shared.Dtos;
 
-namespace Service
+namespace Service.Profiles
 {
     public class MappingProfiles: Profile
     {

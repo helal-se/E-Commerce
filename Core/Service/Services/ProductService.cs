@@ -4,7 +4,7 @@ using Domain.Entities;
 using Service.Abstraction.IServices;
 using Shared.Dtos;
 
-namespace Service
+namespace Service.Services
 {
     public class ProductService(IUnitOfWork unitOfWork, IMapper mapper): IProductService
     {

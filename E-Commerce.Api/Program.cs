@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Persistence.Data.Seeding;
 using Persistence.Repositories;
-using Service;
 using Service.Abstraction;
+using Service.Configurations;
+using Service.Services;
 
 namespace E_Commerce.Api
 {
