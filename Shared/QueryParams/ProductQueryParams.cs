@@ -17,7 +17,7 @@ namespace Shared.QueryParams
             return p => 
                 (!TypeId.HasValue || p.TypeId == TypeId) &&
                 (!BrandId.HasValue || p.BrandId == BrandId) &&
-                (string.IsNullOrEmpty(Search) || p.Name.Contains(Search));
+                (string.IsNullOrEmpty(Search) || p.Name.ToLower().Contains(Search));
         }
     }
 }
