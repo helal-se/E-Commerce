@@ -4,14 +4,15 @@ using Domain.Entities;
 using Service.Abstraction.IServices;
 using Service.Specifications;
 using Shared.Dtos;
+using Shared.QueryParams;
 
 namespace Service.Services
 {
     public class ProductService(IUnitOfWork unitOfWork, IMapper mapper): IProductService
     {
-        public async Task<IEnumerable<ProductDto>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductQueryParams queryParams)
         {
-            var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(new ProductSpecification());
+            var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(new ProductSpecification(queryParams));
             var productsDto = mapper.Map<IEnumerable<ProductDto>>(products);
             return productsDto;
         }
