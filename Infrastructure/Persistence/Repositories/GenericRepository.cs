@@ -10,7 +10,12 @@ namespace Persistence.Repositories
 
         public async Task<TEntity?> GetByIdAsync(TKey id)
         => await dbContext.Set<TEntity>().FindAsync(id);
-        
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity, TKey> specification)
+            => await ApplySpecification(specification).ToListAsync();
+
+        public async Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specification)
+            => await ApplySpecification(specification).FirstOrDefaultAsync();
 
         public async Task AddAsync(TEntity entity)
         => await dbContext.Set<TEntity>().AddAsync(entity);
@@ -20,5 +25,8 @@ namespace Persistence.Repositories
 
         public void DeleteAsync(TEntity entity)
         => dbContext.Set<TEntity>().Remove(entity);
+
+        private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity, TKey> specification)
+            => SpecificationEvaluator.GetQuery(dbContext.Set<TEntity>(), specification);
     }
 }

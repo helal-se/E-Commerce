@@ -21,19 +21,5 @@ namespace Presentation
             var product = await serviceManager.ProductService.GetByIdAsync(id);
             return Ok(product);
         }
-        [HttpGet("types")]
-        public async Task<ActionResult<IEnumerable<ProductTypesDto>>> GetProductTypes()
-        {
-            var productTypes = await serviceManager.ProductService.GetProductTypesAsync();
-            return Ok(productTypes);
-        }
-        [HttpGet("brands")]
-
-        public async Task<ActionResult<IEnumerable<ProductBrandsDto>>> GetProductBrands()
-        {
-            var productBrands = await serviceManager.ProductService.GetProductBrandsAsync();
-            return Ok(productBrands);
-        }
-
     }
 }

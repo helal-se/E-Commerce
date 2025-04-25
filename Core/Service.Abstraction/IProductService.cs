@@ -6,9 +6,5 @@ namespace Service.Abstraction.IServices
     {
         Task<IEnumerable<ProductDto>> GetAllAsync();
         Task<ProductDto> GetByIdAsync(int id);
-
-        Task<IEnumerable<ProductTypesDto>> GetProductTypesAsync();
-        Task<IEnumerable<ProductBrandsDto>> GetProductBrandsAsync();
-
     }
 }
