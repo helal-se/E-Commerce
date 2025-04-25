@@ -14,6 +14,14 @@
             //{
             //    query = query.Include(include);
             //}
+            if (specification.OrderBy is not null)
+            {
+                query = query.OrderBy(specification.OrderBy);
+            }
+            else if(specification.OrderByDesc is not null)
+            {
+                query = query.OrderByDescending(specification.OrderByDesc);
+            }
             query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
             return query;
         }

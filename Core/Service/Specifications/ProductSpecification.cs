@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Shared.QueryParams;
+using Shared.QueryParams.Enums;
 
 namespace Service.Specifications
 {
@@ -16,6 +17,21 @@ namespace Service.Specifications
         {
             AddInclude(product => product.ProductBrand);
             AddInclude(product => product.ProductType);
+            switch (queryParams.SortingOptions)
+            {
+                case ProductSortingOptions.NameAsc:
+                    AddOrderBy(product => product.Name);
+                    break;
+                case ProductSortingOptions.NameDesc:
+                    AddOrderByDesc(product => product.Name);
+                    break;
+                case ProductSortingOptions.PriceAsc:
+                    AddOrderBy(product => product.Price);
+                    break;
+                case ProductSortingOptions.PriceDesc:
+                    AddOrderByDesc(product => product.Price);
+                    break;
+            }
         }
     }
 }
