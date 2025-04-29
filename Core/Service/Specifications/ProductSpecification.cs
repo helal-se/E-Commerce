@@ -31,7 +31,9 @@ namespace Service.Specifications
                 case ProductSortingOptions.PriceDesc:
                     AddOrderByDesc(product => product.Price);
                     break;
-            }
+            }   
+
+            ApplyPaging(queryParams.PageIndex , queryParams.PageSize);
         }
     }
 }
