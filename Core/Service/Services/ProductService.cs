@@ -5,16 +5,21 @@ using Service.Abstraction.IServices;
 using Service.Specifications;
 using Shared.Dtos;
 using Shared.QueryParams;
+using Shared.Results;
 
 namespace Service.Services
 {
     public class ProductService(IUnitOfWork unitOfWork, IMapper mapper): IProductService
     {
-        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductQueryParams queryParams)
+        public async Task<PaginatedResult<ProductDto?>> GetAllAsync(ProductQueryParams queryParams)
         {
             var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(new ProductSpecification(queryParams));
+            int? TotalCount = await unitOfWork.GetRepository<Product, int>().GetCountAsync(new ProductCountSpecification(queryParams));
             var productsDto = mapper.Map<IEnumerable<ProductDto>>(products);
-            return productsDto;
+            var productDtos = productsDto.ToList();
+            var result = new PaginatedResult<ProductDto?>(productDtos, TotalCount?? 0, queryParams.PageIndex,
+                productDtos.Count());
+            return result;
         }
 
         public async Task<ProductDto> GetByIdAsync(int id)

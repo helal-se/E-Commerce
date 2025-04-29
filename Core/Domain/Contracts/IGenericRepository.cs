@@ -8,6 +8,8 @@ namespace Domain.Contracts
         Task<TEntity?> GetByIdAsync(TKey id);
 
         Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity,TKey> specification);
+
+        Task<int?> GetCountAsync(ISpecification<TEntity, TKey> specification);
         Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specification);
 
         Task AddAsync(TEntity entity);

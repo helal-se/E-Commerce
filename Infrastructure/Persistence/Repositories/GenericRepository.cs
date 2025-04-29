@@ -2,7 +2,7 @@
 
 namespace Persistence.Repositories
 {
-    internal class GenericRepository<TEntity, TKey> (AppDbContext dbContext) : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
+    public class GenericRepository<TEntity, TKey> (AppDbContext dbContext) : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         => await dbContext.Set<TEntity>().ToListAsync();
@@ -13,6 +13,10 @@ namespace Persistence.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity, TKey> specification)
             => await ApplySpecification(specification).ToListAsync();
+
+        public async Task<int?> GetCountAsync(ISpecification<TEntity, TKey> specification)
+        => await ApplySpecification(specification).CountAsync();
+
 
         public async Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specification)
             => await ApplySpecification(specification).FirstOrDefaultAsync();

@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Service.Specifications
 {
-    abstract class Specification<TEntity, TKey>(Expression<Func<TEntity, bool>>? criteria = null)
+    public abstract class Specification<TEntity, TKey>(Expression<Func<TEntity, bool>>? criteria = null)
         : ISpecification<TEntity, TKey>
         where TEntity : BaseEntity<TKey>
     {
