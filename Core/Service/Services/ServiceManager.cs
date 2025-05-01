@@ -3,7 +3,7 @@ using Domain.Contracts;
 using Service.Abstraction;
 using Service.Abstraction.IServices;
 
-namespace Service
+namespace Service.Services
 {
     public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper) : IServiceManager
     {

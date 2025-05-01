@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Abstraction;
 using Shared.Dtos;
+using Shared.QueryParams;
 
 namespace Presentation
 {
@@ -10,9 +11,9 @@ namespace Presentation
     {
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {
-            var products = await serviceManager.ProductService.GetAllAsync();
+            var products = await serviceManager.ProductService.GetAllAsync(queryParams);
             return Ok(products);
         }
         [HttpGet("{id:int}")]
@@ -21,19 +22,5 @@ namespace Presentation
             var product = await serviceManager.ProductService.GetByIdAsync(id);
             return Ok(product);
         }
-        [HttpGet("types")]
-        public async Task<ActionResult<IEnumerable<ProductTypesDto>>> GetProductTypes()
-        {
-            var productTypes = await serviceManager.ProductService.GetProductTypesAsync();
-            return Ok(productTypes);
-        }
-        [HttpGet("brands")]
-
-        public async Task<ActionResult<IEnumerable<ProductBrandsDto>>> GetProductBrands()
-        {
-            var productBrands = await serviceManager.ProductService.GetProductBrandsAsync();
-            return Ok(productBrands);
-        }
-
     }
 }
