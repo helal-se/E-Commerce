@@ -2,7 +2,7 @@
 {
     public class BasketItem
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         public string ProductName { get; set; } = string.Empty;
         public string PictureUrl { get; set; } = string.Empty;
         public decimal Price { get; set; }
