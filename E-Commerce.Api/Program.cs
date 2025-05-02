@@ -1,12 +1,16 @@
 using Domain.Contracts;
 using E_Commerce.Api.CustomMiddlewares;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Data.Seeding;
 using Persistence.Repositories;
 using Service.Abstraction;
 using Service.Configurations;
 using Service.Services;
+using Shared.ErrorModels;
 
 namespace E_Commerce.Api
 {
@@ -29,6 +33,26 @@ namespace E_Commerce.Api
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var error = context.ModelState
+                        .Where(e =>  e.Value?.Errors.Count > 0)
+                        .Select(e => new ValidationError()
+                        {
+                            Field = e.Key,
+                            Errors = e.Value?.Errors.Select(x => x.ErrorMessage)
+                        });
+                    var response = new ValidationResponse()
+                    {
+                        StatusCode = StatusCodes.Status400BadRequest,
+                        Errors = error
+                    };
+                    return new BadRequestObjectResult(response);
+                };
+            });
             var app = builder.Build();
             await InitializeDatabase();
 
