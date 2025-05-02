@@ -1,4 +1,6 @@
-﻿namespace Persistence.Data.Seeding
+﻿using Domain.Entities.ProductModule;
+
+namespace Persistence.Data.Seeding
 {
     public class DbInitializer (AppDbContext _dbContext) : IDbInitializer
     {
