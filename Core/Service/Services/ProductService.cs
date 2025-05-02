@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Contracts;
 using Domain.Entities;
+using Domain.Exceptions.ProductExceptions;
 using Service.Abstraction.IServices;
 using Service.Specifications;
 using Shared.Dtos;
@@ -13,11 +14,12 @@ namespace Service.Services
     {
         public async Task<PaginatedResult<ProductDto?>> GetAllAsync(ProductQueryParams queryParams)
         {
+            int? totalCount = await unitOfWork.GetRepository<Product, int>().GetCountAsync(new ProductCountSpecification(queryParams));
             var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(new ProductSpecification(queryParams));
-            int? TotalCount = await unitOfWork.GetRepository<Product, int>().GetCountAsync(new ProductCountSpecification(queryParams));
+            
             var productsDto = mapper.Map<IEnumerable<ProductDto>>(products);
             var productDtos = productsDto.ToList();
-            var result = new PaginatedResult<ProductDto?>(productDtos, TotalCount?? 0, queryParams.PageIndex,
+            var result = new PaginatedResult<ProductDto?>(productDtos, totalCount?? 0, queryParams.PageIndex,
                 productDtos.Count());
             return result;
         }
@@ -26,6 +28,10 @@ namespace Service.Services
         {
             //var product = await unitOfWork.GetRepository<Product, int>().GetByIdAsync(id);
             var product = await unitOfWork.GetRepository<Product, int>().GetByIdAsync(new ProductSpecification(id));
+            if (product == null)
+            {
+                throw new ProductNotFoundException(id);
+            }
             var productDto = mapper.Map<ProductDto>(product);
             return productDto;
         }
