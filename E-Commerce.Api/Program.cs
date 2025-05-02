@@ -1,4 +1,5 @@
 using Domain.Contracts;
+using E_Commerce.Api.CustomMiddlewares;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Persistence.Data.Seeding;
@@ -30,6 +31,10 @@ namespace E_Commerce.Api
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
             var app = builder.Build();
             await InitializeDatabase();
+
+            //------------------------------------------------------------
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
