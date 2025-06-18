@@ -3,7 +3,7 @@ using System.Reflection;
 using AutoMapper;
 using AutoMapper.Execution;
 using AutoMapper.Internal;
-using Domain.Entities;
+using Domain.Entities.ProductModule;
 using Microsoft.Extensions.Configuration;
 using Shared.Dtos;
 

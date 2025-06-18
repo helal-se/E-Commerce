@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Domain.Entities;
+using Domain.Entities.ProductModule;
 using Shared.QueryParams.Enums;
 
 namespace Shared.QueryParams

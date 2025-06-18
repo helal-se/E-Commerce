@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.ProductModule;
 using Shared.QueryParams;
 
 namespace Service.Specifications

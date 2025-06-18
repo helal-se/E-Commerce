@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.ProductModule;
 using Shared.Dtos;
 
 namespace Service.Profiles
