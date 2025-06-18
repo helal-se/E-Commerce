@@ -1,4 +1,6 @@
-﻿namespace Persistence.Data
+﻿using Domain.Entities.ProductModule;
+
+namespace Persistence.Data
 {
     public class AppDbContext: DbContext
     {

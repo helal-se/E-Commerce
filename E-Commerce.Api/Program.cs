@@ -1,7 +1,16 @@
 using Domain.Contracts;
+using E_Commerce.Api.CustomMiddlewares;
+using E_Commerce.Api.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
 using Persistence.Data;
 using Persistence.Data.Seeding;
+using Persistence.Repositories;
+using Service.Abstraction;
+using Service.Configurations;
+using Service.Services;
+using Shared.ErrorModels;
 
 namespace E_Commerce.Api
 {
@@ -14,40 +23,39 @@ namespace E_Commerce.Api
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+            builder.Services.AddSwaggerCollection();
+
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
+
+            builder.Services.AddWebApplicationServices();
+
+            //----------------------------------------------------
 
             var app = builder.Build();
-            await InitializeDatabase();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            await app.InitializeDatabase();
+
+            app.UseCustomMiddlewares();
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseStaticFiles();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
             app.Run();
 
-            async Task InitializeDatabase()
-            {
-                using (var scope = app.Services.CreateScope())
-                {
-                    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-                    await dbInitializer.InitializeAsync();
-                }
-            }
+            
         }
     }
 }
